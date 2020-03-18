@@ -1,37 +1,40 @@
 import random
 
 
+def unique(num):
+    lst_1 = [num[i] for i in range(4)]
+    lst_2 = []
+
+    for i in range(4):
+        if lst_1[i] in lst_2:
+            return False
+        lst_2.append(lst_1[i])
+    return True
+
+
+def input_error(string):
+    try:
+        string_int = int(string)
+    except ValueError:
+        print("[ERROR] Please enter a four number digit\n")
+        return True
+
+    if len(string) != 4:
+        print("[ERROR] Please enter a four number digit\n")
+        return True
+
+    if not unique(string):
+        print("[ERROR] Numbers must not be repeated\n")
+        return True
+
+    return False
+
+
 class func():
     def __init__(self):
         self.get_ans = True
         self.game_start = False
         self.guesses = 1
-
-    def num_is_unique(self, num):
-        lst_1 = [num[i] for i in range(4)]
-        lst_2 = []
-
-        for i in range(4):
-            if lst_1[i] in lst_2:
-                return False
-            lst_2.append(lst_1[i])
-        return True
-
-    def input_error(self, string):
-        try:
-            string_int = int(string)
-        except ValueError:
-            print("[ERROR] Enter a four number digit\n")
-            return True
-
-        if len(string) != 4:
-            print("[ERROR] Enter a four number digit\n")
-            return True
-
-        if not self.num_is_unique(string):
-            print("[ERROR] Numbers must not be repeated\n")
-            return True
-        return False
 
     def ans_func(self):
         while self.get_ans:
@@ -40,7 +43,7 @@ class func():
             if len(ans) == 3:
                 ans = "0" + ans
 
-            if self.num_is_unique(ans):
+            if unique(ans):
                 self.game_start = True
                 self.get_ans = False
         return ans
@@ -53,7 +56,7 @@ class func():
             b = 0
 
             # main
-            if not self.input_error(guess):
+            if not input_error(guess):
                 for i in range(4):
                     for n in range(4):
                         if guess[i] == ans[n]:
@@ -71,8 +74,6 @@ class func():
                     print("{a}A{b}B\n".format(a=a, b=b))
                     self.guesses += 1
 
-def main():
-    Game = func()
-    Game.game()
 
-main()
+game = func()
+game.game()
