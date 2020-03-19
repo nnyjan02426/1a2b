@@ -1,25 +1,8 @@
-# 1A2B game
-"""
-guess a four digit number.
-If a number is correct and at the right place,
-"A" + 1
-
-If a number is correct but at the wrong spot,
-"B" + 1
-
-If number == answer (A == 4),
-You Won!
-"""
-
+# main.py
 import random
 
-get_ans = True
-game_start = False
-guesses = 1
 
-
-# check if any number is unique
-def num_is_unique(num):
+def unique(num):
     lst_1 = [num[i] for i in range(4)]
     lst_2 = []
 
@@ -31,59 +14,78 @@ def num_is_unique(num):
     return True
 
 
-# check if there is any input errors
 def input_error(string):
     try:
         string_int = int(string)
     except ValueError:
-        print("[ERROR] Enter a four number digit\n")
+        print("[ERROR] Please enter a four number digit\n")
         return True
 
     if len(string) != 4:
-        print("[ERROR] Enter a four number digit\n")
+        print("[ERROR] Please enter a four number digit\n")
         return True
 
-    if not num_is_unique(string):
+    if not unique(string):
         print("[ERROR] Numbers must not be repeated\n")
         return True
 
     return False
 
 
-# generate a random four digit number as answer
-# numbers must not be repeated
-while get_ans:
-    ans = str(random.randint(100, 9999))
-
-    if len(ans) == 3:
-        ans = "0" + ans
-
-    if num_is_unique(ans):
-        game_start = True
-        get_ans = False
-
-    print(ans)
-
-while game_start:
-    guess = input(str(guesses) + ": ")
+def get_a_b(str1, str2):
+    """
+    :param str1: guess
+    :param str2: answer
+    :return: a, b
+    """
     a = 0
     b = 0
 
-    # main
-    if not input_error(guess):
+    if not input_error(str1):
         for i in range(4):
             for n in range(4):
-                if guess[i] == ans[n]:
+                if str1[i] == str2[n]:
                     if i == n:
                         a += 1
                     else:
                         b += 1
+    return a, b
 
-        if a == 4:
-            print("\nCongratulations! You Win!")
-            print("Guesses: " + str(guesses) + "\n")
-            game_start = False
 
-        else:
-            print("{a}A{b}B\n".format(a=a, b=b))
-            guesses += 1
+class Game:
+    def __init__(self):
+        self.get_ans = True
+        self.game_start = False
+        self.guesses = 1
+
+    def ans_func(self):
+        while self.get_ans:
+            ans = str(random.randint(100, 9999))
+
+            if len(ans) == 3:
+                ans = "0" + ans
+
+            if unique(ans):
+                self.game_start = True
+                self.get_ans = False
+        return ans
+
+    def game(self):
+        ans = self.ans_func()
+        while self.game_start:
+            guess = input(str(self.guesses) + ": ")
+
+            a, b = get_a_b(guess, ans)
+
+            if a == 4:
+                print("\nCongratulations! You Win!")
+                print("Guesses: " + str(self.guesses) + "\n")
+                self.game_start = False
+
+            else:
+                print("{a}A{b}B\n".format(a=a, b=b))
+                self.guesses += 1
+
+
+game = Game()
+game.game()
