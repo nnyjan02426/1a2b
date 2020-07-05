@@ -3,29 +3,27 @@ import random
 
 
 def unique(num):
-    lst_1 = [num[i] for i in range(4)]
-    lst_2 = []
-
-    for i in range(4):
-        if lst_1[i] in lst_2:
+    i = len(num) - 1
+    for j in num:
+        if num[i] == j:
             return False
-        lst_2.append(lst_1[i])
-
+        i -= 1
+        
     return True
 
 
-def input_error(string):
+def input_error(num):
     try:
-        string_int = int(string)
+        num_int = int(num)
     except ValueError:
         print("[ERROR] Please enter a four number digit\n")
         return True
 
-    if len(string) != 4:
+    if len(num) != 4:
         print("[ERROR] Please enter a four number digit\n")
         return True
 
-    if not unique(string):
+    if not unique(num):
         print("[ERROR] Numbers must not be repeated\n")
         return True
 
@@ -33,11 +31,6 @@ def input_error(string):
 
 
 def get_a_b(str1, str2):
-    """
-    :param str1: guess
-    :param str2: answer
-    :return: a, b
-    """
     a = 0
     b = 0
 
