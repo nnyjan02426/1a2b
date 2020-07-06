@@ -4,8 +4,8 @@ import random
 
 def unique(num):
     i = len(num) - 1
-    for j in num:
-        if num[i] == j:
+    for j in range(len(num)):
+        if num[i] == num[j] and i != j:
             return False
         i -= 1
         
