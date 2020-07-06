@@ -3,12 +3,11 @@ import random
 
 
 def unique(num):
-    i = len(num) - 1
-    for j in range(len(num)):
-        if num[i] == num[j] and i != j:
-            return False
-        i -= 1
-        
+    num2 = num
+    for i in range(4):
+        for j in range(4):
+            if num[i] == num2[j] and i != j:
+                return False
     return True
 
 
@@ -66,18 +65,23 @@ class Game:
     def game(self):
         ans = self.ans_func()
         while self.game_start:
-            guess = input(str(self.guesses) + ": ")
-
-            a, b = get_a_b(guess, ans)
-
-            if a == 4:
-                print("\nCongratulations! You Win!")
-                print("Guesses: " + str(self.guesses) + "\n")
+            guess = input("%2d : " % self.guesses)
+            
+            if guess == "quit":
+                print("The answer is: %s" % ans)
                 self.game_start = False
 
-            else:
-                print("{a}A{b}B\n".format(a=a, b=b))
-                self.guesses += 1
+            elif not input_error(guess):
+                a, b = get_a_b(guess, ans)
+
+                if a == 4:
+                    print("\nCongratulations! You Win!")
+                    print("Guesses: %d\n" % self.guesses)
+                    self.game_start = False
+
+                else:
+                    print("{a}A{b}B\n".format(a=a, b=b))
+                    self.guesses += 1
 
 
 game = Game()

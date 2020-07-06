@@ -10,12 +10,11 @@ def unique(num):
     :return: bool
 
     """
-    i = len(num) - 1
-    for j in range(len(num)):
-        if num[i] == num[j] and i != j:
-            return False
-        i -= 1
-        
+    num2 = num
+    for i in range(4):
+        for j in range(4):
+            if num[i] == num2[j] and i != j:
+                return False
     return True
 
 
@@ -103,6 +102,7 @@ class Game:
             guess = input("%2d : " % self.guesses)
             
             if guess == "quit":
+                print("The answer is: %s" % ans)
                 self.game_start = False
 
             elif not input_error(guess):
