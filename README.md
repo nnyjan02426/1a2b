@@ -1,5 +1,5 @@
 # 1a2b
-python version3.8
+python version3.7
 
 Guess a four digit number.
 The numbers must not be repeated
